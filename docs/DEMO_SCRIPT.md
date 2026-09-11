@@ -79,7 +79,7 @@ Then the terminal:
 npm test
 ```
 
-> "Forty-seven tests, no network. Including the one that matters: turn the concurrency limit
+> "Forty-eight tests, no network. Including the one that matters: turn the concurrency limit
 > down to one and the speedup collapses — so the concurrency assertions are measuring
 > something real."
 

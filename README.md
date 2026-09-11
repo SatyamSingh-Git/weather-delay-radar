@@ -53,7 +53,7 @@ Delay Radar · run 348a7e8b · mock · 4 orders · max concurrency 8
 over an SSE stream and draws the waterfall live.
 
 ```bash
-npm test          # 47 tests, no network
+npm test          # 48 tests, no network
 npm run typecheck
 ```
 
@@ -178,7 +178,7 @@ src/
   cli.ts           the script
   server.ts        SSE stream for the dashboard
 web/               React dashboard (no chart library — the Gantt is hand-written SVG)
-tests/             47 tests, fully mocked
+tests/             48 tests, fully mocked
 ```
 
 The engine emits events and knows nothing about terminals, HTTP servers or React. The CLI,
