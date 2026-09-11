@@ -9,14 +9,14 @@
       "country": "US",
       "condition": "Clear",
       "description": "clear sky",
-      "tempC": 25.74,
-      "feelsLikeC": 25.54,
-      "humidity": 45,
-      "windMs": 5.36,
+      "tempC": 26.3,
+      "feelsLikeC": 26.3,
+      "humidity": 44,
+      "windMs": 4.12,
       "icon": "01d",
       "lat": 40.7143,
       "lon": -74.006,
-      "observedAt": "2026-09-11T17:33:34.000Z"
+      "observedAt": "2026-09-11T17:56:02.000Z"
     }
   },
   {
@@ -32,11 +32,11 @@
       "tempC": 28.99,
       "feelsLikeC": 33.47,
       "humidity": 74,
-      "windMs": 2.06,
+      "windMs": 2.57,
       "icon": "04n",
       "lat": 19.0144,
       "lon": 72.8479,
-      "observedAt": "2026-09-11T17:32:32.000Z"
+      "observedAt": "2026-09-11T17:53:19.000Z"
     }
   },
   {
@@ -49,14 +49,14 @@
       "country": "GB",
       "condition": "Clouds",
       "description": "scattered clouds",
-      "tempC": 20.48,
-      "feelsLikeC": 20.15,
-      "humidity": 60,
+      "tempC": 20.38,
+      "feelsLikeC": 20.07,
+      "humidity": 61,
       "windMs": 1.54,
       "icon": "03d",
       "lat": 51.5085,
       "lon": -0.1257,
-      "observedAt": "2026-09-11T17:39:22.000Z"
+      "observedAt": "2026-09-11T17:48:49.000Z"
     }
   },
   {

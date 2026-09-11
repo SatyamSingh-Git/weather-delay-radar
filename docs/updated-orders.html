@@ -1,0 +1,189 @@
+<!doctype html><html><head><meta charset=utf-8><style>
+@page { size: A4; margin: 16mm 14mm; }
+body { font: 10.5pt/1.5 'Segoe UI',system-ui,sans-serif; color:#16181d; }
+h1 { font-size:17pt; margin:0 0 2px; letter-spacing:-.01em; }
+h2 { font-size:12pt; margin:22px 0 4px; padding-top:12px; border-top:1px solid #dcdfe4; }
+.sub { color:#5b6472; margin:0 0 14px; }
+.meta { color:#5b6472; font-size:9pt; margin:0 0 10px; }
+.note { background:#f5f7f9; border-left:3px solid #8a94a3; padding:9px 12px; margin:10px 0 14px; font-size:9.5pt; }
+table { border-collapse:collapse; width:100%; margin:8px 0 12px; font-size:9.5pt; }
+th { text-align:left; font-weight:600; color:#5b6472; border-bottom:1px solid #c9ced6; padding:5px 7px; font-size:8.5pt; text-transform:uppercase; letter-spacing:.04em; }
+td { padding:5px 7px; border-bottom:1px solid #eceef1; }
+.st { font-weight:600; }
+.st.d { color:#a8620d; }
+.st.p { color:#41484f; }
+pre { font:8.5pt/1.42 'Consolas',monospace; background:#f7f8fa; border:1px solid #e3e6ea; border-radius:4px; padding:10px 12px; white-space:pre-wrap; word-break:break-word; page-break-inside:auto; }
+footer { margin-top:20px; padding-top:9px; border-top:1px solid #dcdfe4; color:#5b6472; font-size:8.5pt; }
+a { color:#1a56a8; }
+</style></head><body>
+
+<h1>Updated orders.json</h1>
+<p class=sub>Delay Radar — AI Intern Assignment 2 · Satyam Singh</p>
+<p class=meta>Repository: <a href="https://github.com/SatyamSingh-Git/weather-delay-radar">github.com/SatyamSingh-Git/weather-delay-radar</a></p>
+
+<div class=note><strong>Two runs are included.</strong> File A is the real run against the live OpenWeatherMap API and is the actual deliverable. On the day it was generated all three valid cities were clear or cloudy, so no order met the Rain / Snow / Extreme condition and nothing was marked Delayed — real weather does not take direction. File B is the identical pipeline over deterministic offline fixtures, included so the <em>Delayed</em> path and the generated customer messages are visible. Only <code>fetch</code> differs between them; classification, retry and error handling are the same code.</div>
+
+<h2>File A — live OpenWeatherMap run <span style="font-weight:400;color:#5b6472">(data/orders.processed.json)</span></h2>
+<p class=meta>Observed 2026-09-11T17:56:02.000Z · produced by <code>npm start</code></p>
+<table><tr><th>Order</th><th>Customer</th><th>City</th><th>Status</th><th>Weather</th><th>Error</th></tr><tr><td>1001</td><td>Alice Smith</td><td>New York</td><td class="st p">Pending</td><td>Clear, 26.3°C</td><td></td></tr><tr><td>1002</td><td>Bob Jones</td><td>Mumbai</td><td class="st p">Pending</td><td>Clouds, 29.0°C</td><td></td></tr><tr><td>1003</td><td>Charlie Green</td><td>London</td><td class="st p">Pending</td><td>Clouds, 20.4°C</td><td></td></tr><tr><td>1004</td><td>InvalidCity123</td><td>InvalidCity123</td><td class="st p">Pending</td><td>—</td><td>CityNotFound</td></tr></table>
+<pre>[
+  {
+    "order_id": "1001",
+    "customer": "Alice Smith",
+    "city": "New York",
+    "status": "Pending",
+    "weather": {
+      "resolvedCity": "New York",
+      "country": "US",
+      "condition": "Clear",
+      "description": "clear sky",
+      "tempC": 26.3,
+      "feelsLikeC": 26.3,
+      "humidity": 44,
+      "windMs": 4.12,
+      "icon": "01d",
+      "lat": 40.7143,
+      "lon": -74.006,
+      "observedAt": "2026-09-11T17:56:02.000Z"
+    }
+  },
+  {
+    "order_id": "1002",
+    "customer": "Bob Jones",
+    "city": "Mumbai",
+    "status": "Pending",
+    "weather": {
+      "resolvedCity": "Mumbai",
+      "country": "IN",
+      "condition": "Clouds",
+      "description": "overcast clouds",
+      "tempC": 28.99,
+      "feelsLikeC": 33.47,
+      "humidity": 74,
+      "windMs": 2.57,
+      "icon": "04n",
+      "lat": 19.0144,
+      "lon": 72.8479,
+      "observedAt": "2026-09-11T17:53:19.000Z"
+    }
+  },
+  {
+    "order_id": "1003",
+    "customer": "Charlie Green",
+    "city": "London",
+    "status": "Pending",
+    "weather": {
+      "resolvedCity": "London",
+      "country": "GB",
+      "condition": "Clouds",
+      "description": "scattered clouds",
+      "tempC": 20.38,
+      "feelsLikeC": 20.07,
+      "humidity": 61,
+      "windMs": 1.54,
+      "icon": "03d",
+      "lat": 51.5085,
+      "lon": -0.1257,
+      "observedAt": "2026-09-11T17:48:49.000Z"
+    }
+  },
+  {
+    "order_id": "1004",
+    "customer": "InvalidCity123",
+    "city": "InvalidCity123",
+    "status": "Pending",
+    "needs_review": true,
+    "error": {
+      "kind": "CityNotFound",
+      "message": "HTTP 404: city not found",
+      "attempts": 1
+    }
+  }
+]</pre>
+
+<h2>File B — offline fixtures, showing the Delayed path <span style="font-weight:400;color:#5b6472">(data/orders.delayed-example.json)</span></h2>
+<p class=meta>Produced by <code>npm run demo</code> · no API key required</p>
+<table><tr><th>Order</th><th>Customer</th><th>City</th><th>Status</th><th>Weather</th><th>Error</th></tr><tr><td>1001</td><td>Alice Smith</td><td>New York</td><td class="st d">Delayed</td><td>Rain, 14.2°C</td><td></td></tr><tr><td>1002</td><td>Bob Jones</td><td>Mumbai</td><td class="st p">Pending</td><td>Clear, 31.4°C</td><td></td></tr><tr><td>1003</td><td>Charlie Green</td><td>London</td><td class="st d">Delayed</td><td>Snow, -1.3°C</td><td></td></tr><tr><td>1004</td><td>InvalidCity123</td><td>InvalidCity123</td><td class="st p">Pending</td><td>—</td><td>CityNotFound</td></tr></table>
+<pre>[
+  {
+    "order_id": "1001",
+    "customer": "Alice Smith",
+    "city": "New York",
+    "status": "Delayed",
+    "weather": {
+      "resolvedCity": "New York",
+      "country": "US",
+      "condition": "Rain",
+      "description": "heavy intensity rain",
+      "tempC": 14.2,
+      "feelsLikeC": 12.8,
+      "humidity": 87,
+      "windMs": 6.7,
+      "icon": "10d",
+      "lat": 40.7143,
+      "lon": -74.006,
+      "observedAt": "2025-09-09T06:40:00.000Z"
+    },
+    "delay_reason": "Rain — heavy intensity rain",
+    "customer_message": "Hi Alice, your order to New York is delayed due to heavy rain. We appreciate your patience!",
+    "message_source": "template"
+  },
+  {
+    "order_id": "1002",
+    "customer": "Bob Jones",
+    "city": "Mumbai",
+    "status": "Pending",
+    "weather": {
+      "resolvedCity": "Mumbai",
+      "country": "IN",
+      "condition": "Clear",
+      "description": "clear sky",
+      "tempC": 31.4,
+      "feelsLikeC": 35.1,
+      "humidity": 62,
+      "windMs": 3.6,
+      "icon": "01d",
+      "lat": 19.0144,
+      "lon": 72.8479,
+      "observedAt": "2025-09-09T06:40:00.000Z"
+    }
+  },
+  {
+    "order_id": "1003",
+    "customer": "Charlie Green",
+    "city": "London",
+    "status": "Delayed",
+    "weather": {
+      "resolvedCity": "London",
+      "country": "GB",
+      "condition": "Snow",
+      "description": "light snow",
+      "tempC": -1.3,
+      "feelsLikeC": -5.8,
+      "humidity": 91,
+      "windMs": 4.1,
+      "icon": "13d",
+      "lat": 51.5085,
+      "lon": -0.1257,
+      "observedAt": "2025-09-09T06:40:00.000Z"
+    },
+    "delay_reason": "Snow — light snow",
+    "customer_message": "Hi Charlie, your order to London is delayed due to light snow. We appreciate your patience!",
+    "message_source": "template"
+  },
+  {
+    "order_id": "1004",
+    "customer": "InvalidCity123",
+    "city": "InvalidCity123",
+    "status": "Pending",
+    "needs_review": true,
+    "error": {
+      "kind": "CityNotFound",
+      "message": "HTTP 404: city not found",
+      "attempts": 1
+    }
+  }
+]</pre>
+
+<footer>In both runs order 1004 (InvalidCity123) returns HTTP 404. It is logged, left Pending, tagged <code>needs_review</code>, and the run completes normally with exit code 0 — a missing city is a reported outcome, not a crash.</footer>
+</body></html>
