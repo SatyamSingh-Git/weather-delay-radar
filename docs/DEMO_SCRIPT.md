@@ -19,8 +19,12 @@ second terminal (the browser tab points at <http://localhost:5173>).
 Terminal, full screen. Type it live:
 
 ```bash
-npm start
+npm run demo
 ```
+
+*(Use `npm start` instead only if your OpenWeatherMap key is active — check first. Real
+weather also won't reliably give you rain on camera, which is why the fixtures are the
+default take. Either way the code path is identical; offline mode replaces only `fetch`.)*
 
 > "Four orders, four different cities. The script fetches weather for all of them
 > concurrently — and rather than asking you to take that on faith, it measures it."
