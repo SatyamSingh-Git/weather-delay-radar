@@ -3,24 +3,21 @@
     "order_id": "1001",
     "customer": "Alice Smith",
     "city": "New York",
-    "status": "Delayed",
+    "status": "Pending",
     "weather": {
       "resolvedCity": "New York",
       "country": "US",
-      "condition": "Rain",
-      "description": "heavy intensity rain",
-      "tempC": 14.2,
-      "feelsLikeC": 12.8,
-      "humidity": 87,
-      "windMs": 6.7,
-      "icon": "10d",
+      "condition": "Clear",
+      "description": "clear sky",
+      "tempC": 25.74,
+      "feelsLikeC": 25.54,
+      "humidity": 45,
+      "windMs": 5.36,
+      "icon": "01d",
       "lat": 40.7143,
       "lon": -74.006,
-      "observedAt": "2025-09-09T06:40:00.000Z"
-    },
-    "delay_reason": "Rain — heavy intensity rain",
-    "customer_message": "Hi Alice, your order to New York is delayed due to heavy rain. We appreciate your patience!",
-    "message_source": "template"
+      "observedAt": "2026-09-11T17:33:34.000Z"
+    }
   },
   {
     "order_id": "1002",
@@ -30,40 +27,37 @@
     "weather": {
       "resolvedCity": "Mumbai",
       "country": "IN",
-      "condition": "Clear",
-      "description": "clear sky",
-      "tempC": 31.4,
-      "feelsLikeC": 35.1,
-      "humidity": 62,
-      "windMs": 3.6,
-      "icon": "01d",
+      "condition": "Clouds",
+      "description": "overcast clouds",
+      "tempC": 28.99,
+      "feelsLikeC": 33.47,
+      "humidity": 74,
+      "windMs": 2.06,
+      "icon": "04n",
       "lat": 19.0144,
       "lon": 72.8479,
-      "observedAt": "2025-09-09T06:40:00.000Z"
+      "observedAt": "2026-09-11T17:32:32.000Z"
     }
   },
   {
     "order_id": "1003",
     "customer": "Charlie Green",
     "city": "London",
-    "status": "Delayed",
+    "status": "Pending",
     "weather": {
       "resolvedCity": "London",
       "country": "GB",
-      "condition": "Snow",
-      "description": "light snow",
-      "tempC": -1.3,
-      "feelsLikeC": -5.8,
-      "humidity": 91,
-      "windMs": 4.1,
-      "icon": "13d",
+      "condition": "Clouds",
+      "description": "broken clouds",
+      "tempC": 20.57,
+      "feelsLikeC": 20.25,
+      "humidity": 60,
+      "windMs": 1.54,
+      "icon": "04d",
       "lat": 51.5085,
       "lon": -0.1257,
-      "observedAt": "2025-09-09T06:40:00.000Z"
-    },
-    "delay_reason": "Snow — light snow",
-    "customer_message": "Hi Charlie, your order to London is delayed due to light snow. We appreciate your patience!",
-    "message_source": "template"
+      "observedAt": "2026-09-11T17:26:47.000Z"
+    }
   },
   {
     "order_id": "1004",

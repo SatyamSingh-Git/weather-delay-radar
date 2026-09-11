@@ -7,10 +7,17 @@ and does not fall over when a city doesn't exist.
 ![The dashboard mid-run](docs/screenshots/dashboard.png)
 
 > **Looking for the updated orders file?** It's
-> **[`data/orders.processed.json`](data/orders.processed.json)**.
-> `data/orders.json` is left byte-for-byte as the assignment supplied it, so every run starts
-> from the same place and the before/after comparison stays meaningful. To rewrite it in
-> place instead: `npm start -- --out data/orders.json`.
+> **[`data/orders.processed.json`](data/orders.processed.json)** — a real run against the live
+> OpenWeatherMap API. `data/orders.json` is left byte-for-byte as the assignment supplied it,
+> so every run starts from the same place and the before/after comparison stays meaningful. To
+> rewrite it in place instead: `npm start -- --out data/orders.json`.
+>
+> **Note on that file:** New York, Mumbai and London were all clear or cloudy when it was
+> generated, so nothing was delayed — real weather doesn't take direction. The invalid city
+> still failed and was handled. To show the delayed path,
+> [`data/orders.delayed-example.json`](data/orders.delayed-example.json) is the same pipeline
+> over the offline fixtures (`npm run demo`), where New York is raining and London is snowing.
+> Both files come from the identical code path; only `fetch` differs.
 
 ---
 
