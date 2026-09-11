@@ -51,7 +51,7 @@ async function streamRun(url: URL, response: ServerResponse): Promise<void> {
     );
 
     const report = await runPipeline({ config, orders, client, bus });
-    await writeOrders(config.outputPath, report.orders);
+    if (!report.aborted) await writeOrders(config.outputPath, report.orders);
 
     send({ type: 'run:report', seed: orders, report });
   } catch (error) {

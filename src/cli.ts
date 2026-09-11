@@ -38,10 +38,15 @@ try {
 
   const report = await runPipeline({ config, orders, client, bus });
 
-  await writeOrders(config.outputPath, report.orders);
+  // An aborted run learned nothing about the weather — every city came back Aborted or
+  // fatal. Writing that over a good result would destroy the last real one to record a
+  // failure the report already describes.
+  if (!report.aborted) {
+    await writeOrders(config.outputPath, report.orders);
+  }
   if (values.report) await writeFile(values.report, `${JSON.stringify(report, null, 2)}\n`, 'utf8');
 
-  printReport(report, config.outputPath);
+  printReport(report, report.aborted ? null : config.outputPath);
 
   // A city that does not exist is a reported outcome, not a failed run. Only a fatal
   // condition — a rejected API key, say — is worth a non-zero exit.

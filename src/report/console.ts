@@ -45,7 +45,8 @@ export function attachConsoleReporter(bus: EventBus): void {
   });
 }
 
-export function printReport(report: RunReport, outputPath: string): void {
+/** `outputPath` is null when the run was aborted and nothing was written. */
+export function printReport(report: RunReport, outputPath: string | null): void {
   const { metrics } = report;
 
   console.log(`\n  ${dim('─ Concurrency ' + '─'.repeat(46))}\n`);
@@ -86,7 +87,11 @@ export function printReport(report: RunReport, outputPath: string): void {
     `  ${amber(`${metrics.delayed} delayed`)} · ${green(`${metrics.onTime} on time`)} · ${rose(`${metrics.failed} failed`)}`,
   );
   if (report.aborted) console.log(`  ${rose(`run aborted: ${report.aborted.message}`)}`);
-  console.log(`  ${dim('→')} ${outputPath}\n`);
+  console.log(
+    outputPath
+      ? `  ${dim('→')} ${outputPath}\n`
+      : `  ${dim('→ nothing written; the previous output was left untouched')}\n`,
+  );
 }
 
 /**

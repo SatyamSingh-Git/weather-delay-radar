@@ -67,6 +67,19 @@ describe('a rejected API key', () => {
     expect(report.aborted?.message).toMatch(/OWM_API_KEY/);
   });
 
+  it('produces no usable orders, so callers know not to persist it', async () => {
+    const config = testConfig();
+    const client = createOpenWeatherClient(config, testDeps(async () => json(401, { message: 'Invalid API key' })));
+
+    const report = await runPipeline({ config, orders: ORDERS, client, bus: createEventBus() });
+
+    // The CLI and the server both skip the write when `aborted` is set. An aborted run
+    // learned nothing, and writing it would destroy the last good result.
+    expect(report.aborted).toBeDefined();
+    expect(report.orders.every((order) => order.error)).toBe(true);
+    expect(report.orders.some((order) => order.weather)).toBe(false);
+  });
+
   it('actually cancels the requests still in flight', async () => {
     const config = testConfig();
     const client = createOpenWeatherClient(
