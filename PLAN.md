@@ -44,7 +44,7 @@ reviewer can grade without reading source.
 | No hardcoded key, use `.env` | `src/config.ts` — loaded and schema-validated at boot, redacted in all output |
 | Updated `orders.json` showing delays | `data/orders.processed.json` + an in-app before/after diff view |
 | AI Log of prompts used | `AI_LOG.md` |
-| Demo recording | `docs/DEMO_SCRIPT.md` — shot list + narration, and a `--demo` mode built for camera |
+| Demo recording | a `--demo` mode built for camera; the shot list is kept outside the repo |
 
 ---
 
@@ -121,7 +121,6 @@ weather-delay-radar/
 ├─ tests/
 └─ docs/
    ├─ screenshots/
-   └─ DEMO_SCRIPT.md
 ```
 
 ---
@@ -326,7 +325,7 @@ whole thing in fifteen seconds, which is worth more than any README paragraph.
 | P4 | full Vitest suite, green |
 | P5 | `server.ts` with SSE |
 | P6 | `web/` dashboard |
-| P7 | README · ARCHITECTURE · AI_LOG · DEMO_SCRIPT · screenshots |
+| P7 | README · ARCHITECTURE · AI_LOG · screenshots |
 
 P3 is the checkpoint: if everything after it vanished, the assignment would still be complete
 and correct. Everything from P4 on is the differentiator.
@@ -338,5 +337,5 @@ and correct. Everything from P4 on is the differentiator.
 - Live verification needs your `OWM_API_KEY` in `.env`. Free-tier keys take ~10 minutes to a
   couple of hours to activate after signup — until then live mode returns 401, which the
   `AuthError` path already reports as an actionable message rather than a stack trace.
-- The demo recording itself is yours to capture; `docs/DEMO_SCRIPT.md` will carry the shot
+- The demo recording itself is yours to capture; the shot
   list and a ~90-second narration.
