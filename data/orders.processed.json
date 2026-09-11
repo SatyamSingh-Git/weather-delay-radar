@@ -48,15 +48,15 @@
       "resolvedCity": "London",
       "country": "GB",
       "condition": "Clouds",
-      "description": "broken clouds",
-      "tempC": 20.57,
-      "feelsLikeC": 20.25,
+      "description": "scattered clouds",
+      "tempC": 20.48,
+      "feelsLikeC": 20.15,
       "humidity": 60,
       "windMs": 1.54,
-      "icon": "04d",
+      "icon": "03d",
       "lat": 51.5085,
       "lon": -0.1257,
-      "observedAt": "2026-09-11T17:26:47.000Z"
+      "observedAt": "2026-09-11T17:39:22.000Z"
     }
   },
   {

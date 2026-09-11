@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "tsx src/cli.ts",
-    "demo": "tsx src/cli.ts --mock",
+    "demo": "tsx src/cli.ts --mock --out data/orders.delayed-example.json",
     "server": "tsx src/server.ts",
     "dev": "concurrently -n server,web -c cyan,magenta \"npm:server\" \"npm:dev:web\"",
     "dev:web": "vite --config web/vite.config.ts",
