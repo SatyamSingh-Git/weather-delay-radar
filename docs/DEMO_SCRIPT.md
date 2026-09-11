@@ -5,6 +5,22 @@ Target: **2 minutes**. Record at 1920×1080, browser zoom 100%, terminal font ~1
 The arc is deliberate: **live API first** to prove the integration is real, **fixtures second**
 to show the delayed path, because real weather won't cooperate on demand.
 
+**"The waterfall"** is the bar chart — the `─ Concurrency ─` block in the terminal, and the
+panel headed *Concurrency waterfall* in the dashboard. Same chart shape as your browser
+DevTools' Network tab: one horizontal bar per request on a shared time axis.
+
+```
+New York     ███████████████████████                      420.5ms 200
+Mumbai       ████████████████████████████████             591.1ms 200
+London       ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓          █████████████████ 823.1ms 503→200
+InvalidCity… ▓▓▓▓▓▓▓                                      125.7ms 404
+```
+
+Left-to-right is time from the start of the run. Every bar starting at the same left edge is
+the concurrency, visible: sequential code would draw a staircase instead. `█` is a successful
+attempt, `▓` a failed one — London's two segments are its 503 and its retry, and the space
+between them is the backoff wait.
+
 ## Before you hit record
 
 ```bash
@@ -35,12 +51,12 @@ npm start
 > "Four orders, four cities, and the script fetches weather for all of them concurrently.
 > This is the live OpenWeatherMap API — real temperatures, timestamped a few seconds ago."
 
-When the waterfall prints:
+When the `─ Concurrency ─` block prints (the bar chart):
 
 > "Peak overlap four: four requests genuinely in flight at once, not a fast loop. Wall clock
 > is about 450 milliseconds against 880 sequential."
 
-Then the orders:
+Then the `─ Orders ─` block:
 
 > "Today New York, Mumbai and London are all clear or cloudy, so nothing is delayed — that's
 > the honest output, real weather doesn't take direction. What does happen is InvalidCity123
@@ -62,12 +78,12 @@ npm run demo
 > Offline mode replaces `fetch` and nothing above it — retry, backoff, status handling and
 > parsing are all the same code you just watched hit the live API."
 
-Point at the dispatch lines:
+Point at the `+ 1ms → New York` dispatch lines at the top:
 
 > "All four dispatched within about a millisecond. London's first attempt returns 503, so it
 > backs off and retries — that's the gap and the second segment on its bar."
 
-Then the orders block:
+Then the `─ Orders ─` block:
 
 > "New York is raining and London is snowing, so both flip to Delayed, and each customer gets
 > a message built from the actual forecast — 'heavy rain' for one, 'light snow' for the other.
